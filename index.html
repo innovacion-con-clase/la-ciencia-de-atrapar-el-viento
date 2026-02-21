@@ -47,8 +47,8 @@
             height: 100%;
             background-image: url('https://i.imgur.com/cSsndmN.jpeg');
             background-size: cover;
-            background-position: center 20%;
-            filter: brightness(0.5) contrast(1.15);
+            background-position: center 10%;
+            filter: brightness(0.55) contrast(1.2);
             transition: filter 2s ease, transform 60s linear;
             z-index: -1;
         }
@@ -71,7 +71,7 @@
         .vignette {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, transparent 30%, rgba(7, 9, 13, 0.4) 70%, var(--bg-dark) 100%);
+            background: radial-gradient(circle at center 20%, transparent 40%, rgba(7, 9, 13, 0.3) 75%, var(--bg-dark) 100%);
             z-index: 1;
             pointer-events: none;
         }
@@ -175,10 +175,10 @@
     <!-- PANTALLA DE INICIO -->
     <div id="splash-screen"
         class="relative z-20 min-h-screen flex items-center justify-center p-6 text-center transition-all duration-1000">
-        <div class="max-w-md w-full reveal-step">
-            <div class="mb-8">
+        <div class="max-w-md w-full reveal-step mt-20">
+            <div class="mb-6">
                 <img src="https://i.imgur.com/dDYOrEm.png" alt="Logo"
-                    class="w-28 mx-auto mix-blend-screen brightness-125 contrast-125 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">
+                    class="w-24 mx-auto mix-blend-screen brightness-150 contrast-150 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
             </div>
 
             <h1
@@ -252,7 +252,7 @@
                 id: 'video-intro',
                 title: "El Rey Moderno",
                 subtitle: "La Soledad en la Cima",
-                videoUrl: "https://www.youtube.com/embed/SqvAoKaDJcY",
+                videoUrl: "https://i.imgur.com/wXhMdQg.mp4",
                 videoNarrative: "El video muestra a un hombre inmensamente exitoso sentado solo en un estadio vibrante. Mientras miles celebran a su alrededor, él permanece absorto en su teléfono, habitando una burbuja de aislamiento absoluto. Representa la paradoja moderna: tener el mundo en la palma de la mano, pero no tener a nadie en el corazón.",
                 narrative: "¡Mira esa imagen un segundo! Ahí está el hombre que ha hackeado el sistema del éxito mundial. Tiene el control de la información, el dinero suficiente para comprar países y el sueño de colonizar otros mundos. Pero ahí lo ves: solo, en un palco de cristal, rodeado de miles de personas pero habitando un silencio ensordecedor. Es el recordatorio moderno de que puedes ser el dueño de la fiesta y, aun así, sentirte el invitado más extraño. ¿Qué busca en su teléfono? Quizás busca lo mismo que tú: algo que no se pueda comprar con acciones de Tesla.",
                 question: "Al ver la soledad de Musk, ¿qué vacío crees que un tuit o un millón de dólares jamás podrían llenar?",
@@ -394,17 +394,25 @@
             `;
 
             if (step.videoUrl) {
-                let finalUrl = step.videoUrl;
-                if (finalUrl.includes('shorts/')) {
-                    finalUrl = finalUrl.replace('shorts/', 'embed/');
+                let videoHtml = '';
+                const isDirectVideo = step.videoUrl.match(/\.(mp4|webm|ogg)$/i);
+
+                if (isDirectVideo) {
+                    videoHtml = `<video class="w-full h-full object-cover" src="${step.videoUrl}" autoplay muted loop playsinline></video>`;
+                } else {
+                    let finalUrl = step.videoUrl;
+                    if (finalUrl.includes('shorts/')) {
+                        finalUrl = finalUrl.replace('shorts/', 'embed/');
+                    }
+                    const origin = window.location.origin === 'null' ? 'https://www.youtube.com' : window.location.origin;
+                    const embedUrl = finalUrl.replace('youtube.com', 'youtube-nocookie.com') + (finalUrl.includes('?') ? '&' : '?') + `enablejsapi=1&origin=${origin}`;
+                    videoHtml = `<iframe class="w-full h-full" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
                 }
-                const origin = window.location.origin === 'null' ? 'https://www.youtube.com' : window.location.origin;
-                const embedUrl = finalUrl.replace('youtube.com', 'youtube-nocookie.com') + (finalUrl.includes('?') ? '&' : '?') + `enablejsapi=1&origin=${origin}`;
 
                 ui += `
                     <div class="mb-8">
                         <div class="w-full aspect-video rounded-[32px] overflow-hidden border border-white/10 shadow-2xl relative bg-black/40">
-                            <iframe class="w-full h-full" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                            ${videoHtml}
                         </div>
                         <div class="mt-4 flex flex-col gap-3">
                             <button onclick="toggleNarrative()" class="text-[9px] font-bold text-slate-500 hover:text-indigo-400 uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
