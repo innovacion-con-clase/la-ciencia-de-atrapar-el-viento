@@ -1,0 +1,338 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  ChevronRight, 
+  ChevronLeft, 
+  CheckCircle, 
+  Compass,
+  Crown,
+  Anchor,
+  CloudRain,
+  Sun,
+  ScrollText,
+  Sparkles,
+  Zap,
+  Quote,
+  Play,
+  Eye
+} from 'lucide-react';
+
+const App = () => {
+  const [isStarted, setIsStarted] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+
+  // URL de la imagen de fondo temática
+  const backgroundImage = "https://i.imgur.com/cSsndmN.jpeg";
+
+  const pathContent = [
+    {
+      id: 'video-intro',
+      title: "Prólogo: El Rey Moderno",
+      subtitle: "La Soledad en la Cima",
+      videoUrl: "https://www.youtube.com/embed/ElZfPNczhDo",
+      narrative: "¡Mira esa imagen un segundo! Ahí está el hombre que ha hackeado el sistema del éxito mundial. Tiene el control de la información, el dinero suficiente para comprar países y el sueño de colonizar otros mundos. Pero ahí lo ves: solo, en un palco de cristal, rodeado de miles de personas pero habitando un silencio ensordecedor. Es el recordatorio moderno de que puedes ser el dueño de la fiesta y, aun así, sentirte el invitado más extraño. ¿Qué mira en su teléfono? Quizás busca lo mismo que tú: algo que no se pueda comprar con acciones de Tesla.",
+      question: "Al ver la soledad de Musk, ¿qué vacío crees que un tuit o un millón de dólares jamás podrían llenar?",
+      type: "text",
+      placeholder: "Reflexiona sobre el vacío...",
+      icon: <Eye className="text-indigo-400 w-10 h-10" />,
+      accent: "from-indigo-900/60 to-transparent"
+    },
+    {
+      id: 'autopsia',
+      title: "La Autopsia del Éxito",
+      subtitle: "El Espejismo de la Vanidad",
+      verse: "Eclesiastés 1:2 y 2:11",
+      scripture: "«Nada tiene sentido —dice el Maestro—, ¡absolutamente nada tiene sentido! [...] Al observar todo lo que había logrado... vi que todo era humo, un correr tras el viento».",
+      narrative: "Salomón no era un monje amargado; era un hombre que lo intentó todo. Construyó ciudades, acumuló oro como si fuera arena y tuvo a las mujeres más hermosas del mundo a sus pies. Pero cuando la música se apagó y las luces se atenuaron, se asomó al balcón de su alma y solo vio 'Hebel': humo. ¡Escúchame bien! Pasamos la vida creyendo que la próxima casa, el próximo ascenso o el próximo aplauso será el que finalmente nos calme la sed. Salomón ya estuvo ahí, y nos grita desde el pasado: '¡Está vacío!'.",
+      question: "¿Cuál es ese 'logro' en tu vida que, aunque lo alcanzaste, te dejó con un sabor a poco?",
+      placeholder: "Confiesa aquí ese espejismo...",
+      icon: <Crown className="text-amber-500 w-10 h-10" />,
+      accent: "from-amber-500/60 to-transparent"
+    },
+    {
+      id: 'eternidad',
+      title: "El Latido de lo Invisible",
+      subtitle: "El ADN de la Eternidad",
+      verse: "Eclesiastés 3:11",
+      scripture: "«Dios lo hizo todo hermoso para el momento apropiado. Él sembró la eternidad en el corazón humano...»",
+      narrative: "A veces te sientes un extraño en este mundo, ¿verdad? Te despiertas con una sensación de que 'falta algo' incluso cuando todo parece estar bien. No es depresión, es diseño. Dios te puso un sensor de infinito. Vivimos en un cuerpo que envejece y en un tiempo que se escapa como el agua, pero tu alma tiene hambre de lo eterno. Estás atrapado entre lo temporal que ves y lo eterno que sientes. Esa insatisfacción crónica es la prueba de que tu verdadera casa no está hecha de ladrillos, sino de gloria.",
+      question: "En una escala del 1 al 10, ¿qué tan fuerte sientes ese 'hambre' de algo que este mundo no te ofrece?",
+      type: "slider",
+      icon: <Compass className="text-indigo-400 w-10 h-10" />,
+      accent: "from-indigo-500/60 to-transparent"
+    },
+    {
+      id: 'adversidad',
+      title: "El Taller del Escultor",
+      subtitle: "Soberanía en la Tormenta",
+      verse: "Eclesiastés 7:14",
+      scripture: "«Disfruta de la prosperidad mientras puedas, pero cuando lleguen los tiempos difíciles, reconoce que ambas cosas provienen de Dios».",
+      narrative: "¡Cuidado con la teología barata que dice que Dios solo está en el sol! Salomón aprendió que el Maestro es el dueño de las cuatro estaciones. Hay momentos para celebrar y hay momentos para llorar, pero ambos están bajo el mismo control. La adversidad no es un error de cálculo del cielo; es el gimnasio donde Dios entrena tu fe. Él no quiere que seas cómodo, quiere que seas maduro. A veces tiene que quitarte el piso para que finalmente te des cuenta de que Él es tu roca.",
+      question: "Si hoy estás en una tormenta, ¿puedes confiar en que el Escultor está quitando lo que sobra de ti?",
+      options: ["Sí, confío en Su proceso", "Me cuesta verlo, pero lo intento", "Necesito fuerzas para rendirme"],
+      type: "choice",
+      icon: <CloudRain className="text-slate-400 w-10 h-10" />,
+      accent: "from-slate-500/60 to-transparent"
+    },
+    {
+      id: 'gozo',
+      title: "Catedrales en lo Cotidiano",
+      subtitle: "El Gozo de lo Ordinario",
+      verse: "Eclesiastés 8:15",
+      scripture: "«Entonces sugiero que se diviertan... no hay nada mejor para la gente que disfrutar de la vida».",
+      narrative: "Muchos viven esperando el 'milagro épico' para ser felices, mientras ignoran los milagros que Dios pone en su mesa cada mañana. La fe real no te vuelve un ser sombrío; te da ojos para ver a Dios en el aroma de un café, en la risa de tus hijos o en una cena compartida. No conviertas estas bendiciones en ídolos, pero recíbelas como lo que son: destellos de la bondad de un Padre que disfruta verte disfrutar.",
+      question: "Detén el ruido un segundo. Escribe 3 milagros 'pequeños' que Dios te regaló hoy:",
+      type: "list",
+      icon: <Sun className="text-yellow-400 w-10 h-10" />,
+      accent: "from-yellow-500/60 to-transparent"
+    },
+    {
+      id: 'conclusion',
+      title: "El Puerto del Descanso",
+      subtitle: "La Rendición Final",
+      verse: "Eclesiastés 12:13",
+      scripture: "«Aquí culmina el relato. Mi conclusión final es la siguiente: teme a Dios y obedece sus mandatos...»",
+      narrative: "Llegamos al final del muelle. Puedes seguir corriendo tras el viento, intentando embotellar el humo, o puedes rendirte. El temor del Señor no es el pánico de un esclavo ante un tirano, es la reverencia de un hijo que ha encontrado su lugar en los brazos del Padre. Soltar el timón no es naufragar, es permitir que el Capitán te lleve a casa. Tu mayor propósito no es lograr cosas para Dios, sino perderte en Su mirada y obedecerle por amor.",
+      question: "¿Estás listo para dejar de atrapar el viento y abrazar al Creador?",
+      type: "final",
+      icon: <Anchor className="text-emerald-500 w-10 h-10" />,
+      accent: "from-emerald-500/60 to-transparent"
+    }
+  ];
+
+  const handleNext = () => {
+    if (currentStep < pathContent.length - 1) {
+      setCurrentStep(currentStep + 1);
+    } else {
+      setIsFinished(true);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentStep > 0) setCurrentStep(currentStep - 1);
+  };
+
+  if (!isStarted) {
+    return (
+      <div className="min-h-screen bg-[#0a0c10] flex flex-col items-center justify-center relative font-sans overflow-hidden">
+        <div 
+          className="absolute inset-0 z-0 scale-105 animate-pulse-slow"
+          style={{
+            backgroundImage: `url('${backgroundImage}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'brightness(0.4) saturate(0.8)'
+          }}
+        />
+        <div className="absolute inset-0 z-1 bg-gradient-to-t from-[#0a0c10] via-transparent to-[#0a0c10]/40" />
+        
+        <div className="relative z-10 max-w-md w-full px-6 text-center animate-in fade-in zoom-in duration-1000">
+          <div className="mb-12 transform hover:scale-105 transition-transform duration-500">
+            <img 
+              src="https://i.imgur.com/dDYOrEm.png" 
+              alt="Marca Logo" 
+              className="w-40 h-auto mx-auto drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]"
+              onError={(e) => { e.currentTarget.style.display = 'none'; }}
+            />
+          </div>
+          
+          <div className="space-y-2 mb-12">
+            <h1 className="text-6xl font-black text-white leading-none uppercase italic tracking-tighter drop-shadow-lg">
+              Biografía <br/> <span className="text-indigo-400 text-5xl">del Humo</span>
+            </h1>
+            <p className="text-amber-500 font-bold text-sm tracking-[0.4em] uppercase">
+              La Ciencia de Atrapar el Viento
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            <p className="text-slate-200 text-base leading-relaxed italic px-4 font-medium drop-shadow-md">
+              "Una travesía interactiva por el corazón de Salomón para descubrir que solo la eternidad puede saciar tu sed."
+            </p>
+            
+            <button 
+              onClick={() => setIsStarted(true)}
+              className="group relative inline-flex items-center justify-center px-12 py-5 font-black text-white uppercase tracking-[0.2em] bg-indigo-600 rounded-2xl overflow-hidden transition-all hover:bg-indigo-500 hover:shadow-[0_0_50px_rgba(79,70,229,0.5)] active:scale-95"
+            >
+              <span className="relative z-10 flex items-center gap-3 text-lg">
+                Comenzar Travesía <Play size={22} fill="currentColor" />
+              </span>
+            </button>
+          </div>
+
+          <p className="mt-20 text-slate-400 text-[10px] uppercase tracking-[0.6em] font-black opacity-60">
+            Casa de Juanita • Charla Semanal
+          </p>
+        </div>
+        
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes pulse-slow {
+            0%, 100% { transform: scale(1.05); }
+            50% { transform: scale(1.12); }
+          }
+          .animate-pulse-slow {
+            animation: pulse-slow 25s infinite ease-in-out;
+          }
+        `}} />
+      </div>
+    );
+  }
+
+  if (isFinished) {
+    return (
+      <div className="min-h-screen bg-[#0a0c10] flex items-center justify-center p-6 font-sans relative overflow-hidden">
+        <div 
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: `url('${backgroundImage}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'brightness(0.2) blur(8px)'
+          }}
+        />
+        <div className="w-full max-w-md bg-[#141820]/80 backdrop-blur-xl rounded-[40px] p-10 text-center border border-white/10 shadow-2xl relative z-10">
+           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-emerald-500 to-indigo-500" />
+           <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+             <CheckCircle className="text-emerald-400 w-12 h-12" />
+           </div>
+           <h2 className="text-3xl font-black text-white mb-4 uppercase italic tracking-tighter">¡Travesía Completada!</h2>
+           <p className="text-slate-400 leading-relaxed mb-8 italic">
+             "Has comprendido la ciencia del viento; ahora vive para lo que realmente permanece."
+           </p>
+           <button 
+             onClick={() => { setIsFinished(false); setCurrentStep(0); setIsStarted(false); }}
+             className="w-full py-4 bg-white text-black font-black uppercase tracking-widest rounded-2xl hover:bg-slate-200 transition-all"
+           >
+             Reiniciar Ruta
+           </button>
+        </div>
+      </div>
+    );
+  }
+
+  const step = pathContent[currentStep];
+
+  return (
+    <div className="min-h-screen bg-[#0a0c10] text-slate-200 font-sans selection:bg-indigo-500/30 relative overflow-hidden">
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `url('${backgroundImage}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'brightness(0.12) saturate(0.5) blur(3px)'
+        }}
+      />
+      <div className={`fixed inset-0 bg-gradient-to-tr ${step.accent} opacity-30 transition-all duration-1000 pointer-events-none z-1`} />
+      
+      <div className="relative z-10 max-w-lg mx-auto min-h-screen flex flex-col p-6 animate-in fade-in duration-700">
+        
+        <div className="flex gap-2 mb-8">
+          {pathContent.map((_, idx) => (
+            <div key={idx} className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${idx <= currentStep ? 'bg-white shadow-[0_0_10px_rgba(255,255,255,0.5)]' : 'bg-white/10'}`} />
+          ))}
+        </div>
+
+        <div className="flex-1 flex flex-col">
+          <header className="mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">Paso {currentStep + 1} de {pathContent.length}</span>
+              <div className="p-3 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md">
+                {step.icon}
+              </div>
+            </div>
+            <h1 className="text-4xl font-black text-white leading-none uppercase italic mb-2 tracking-tighter">
+              {step.title}
+            </h1>
+            <p className="text-amber-500 font-bold text-xs uppercase tracking-widest">
+              {step.subtitle}
+            </p>
+          </header>
+
+          {step.videoUrl && (
+            <div className="w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl mb-6 relative group">
+              <iframe className="w-full h-full" src={step.videoUrl} title="Prólogo Visual" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+            </div>
+          )}
+
+          {step.scripture && (
+            <div className="relative mb-6 group">
+              <div className="absolute -left-2 top-0 bottom-0 w-1 bg-indigo-500 rounded-full" />
+              <div className="pl-6 py-2">
+                <Quote className="text-indigo-500/30 mb-2" size={20} />
+                <p className="text-indigo-100/90 text-lg italic leading-relaxed font-serif">
+                  {step.scripture}
+                </p>
+                <div className="mt-4 flex items-center gap-2">
+                  <ScrollText size={14} className="text-indigo-400" />
+                  <span className="text-indigo-400 text-[10px] font-black uppercase tracking-widest">{step.verse}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <article className="mb-8">
+            <p className="text-slate-300 leading-relaxed text-base font-medium drop-shadow-sm">
+              {step.narrative || step.content}
+            </p>
+          </article>
+
+          <section className="bg-white/5 rounded-[32px] p-6 border border-white/10 backdrop-blur-lg shadow-xl mb-10">
+            <h3 className="text-white font-bold text-sm mb-4 flex items-center gap-2 uppercase tracking-wider">
+              <Zap size={14} className="text-amber-500" /> Reflexión Directa
+            </h3>
+            <p className="text-slate-300 text-sm mb-4 italic">{step.question}</p>
+
+            {step.type === 'slider' ? (
+              <div className="py-4">
+                <input type="range" min="1" max="10" className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-indigo-500" />
+                <div className="flex justify-between mt-2 text-[10px] font-bold text-slate-500 uppercase">
+                  <span>Susurro</span>
+                  <span>Grito del Alma</span>
+                </div>
+              </div>
+            ) : step.type === 'choice' ? (
+              <div className="space-y-2">
+                {step.options.map(opt => (
+                  <button key={opt} className="w-full p-4 text-left rounded-xl bg-white/10 border border-white/10 hover:border-white/30 hover:bg-white/20 transition-all text-xs font-bold uppercase tracking-widest text-slate-300 hover:text-white">
+                    {opt}
+                  </button>
+                ))}
+              </div>
+            ) : step.type === 'list' ? (
+              <div className="space-y-3">
+                {[1, 2, 3].map(i => (
+                  <input key={i} className="w-full bg-transparent border-b border-white/20 p-2 text-sm outline-none focus:border-amber-500 transition-colors text-white" placeholder={`Milagro #${i}...`} />
+                ))}
+              </div>
+            ) : step.type === 'final' ? (
+              <div className="text-center py-4 text-emerald-400 text-xs font-bold uppercase tracking-[0.2em] animate-pulse">
+                Haz una oración de rendición ahora...
+              </div>
+            ) : (
+              <textarea className="w-full bg-transparent border border-white/10 rounded-2xl p-4 text-sm outline-none focus:border-indigo-500 transition-all h-24 text-white placeholder-slate-500" placeholder={step.placeholder} />
+            )}
+          </section>
+        </div>
+
+        <footer className="py-6 flex gap-4">
+          <button onClick={handlePrev} className={`flex-1 py-4 px-6 rounded-2xl bg-white/5 text-slate-400 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/10 transition-all ${currentStep === 0 ? 'opacity-30 pointer-events-none' : ''}`}>
+            <ChevronLeft size={16} /> Volver
+          </button>
+          <button onClick={handleNext} className="flex-[2] py-4 px-6 rounded-2xl bg-indigo-600 text-white font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 hover:bg-indigo-500 transition-all active:scale-95">
+            {currentStep === pathContent.length - 1 ? 'Finalizar' : 'Continuar'} <ChevronRight size={16} />
+          </button>
+        </footer>
+
+        <div className="pb-4 text-center">
+          <div className="flex items-center justify-center gap-3 opacity-30 grayscale mb-2">
+             <img src="https://i.imgur.com/dDYOrEm.png" alt="Logo" className="h-4 w-auto" onError={(e) => { e.currentTarget.style.display = 'none'; }} />
+          </div>
+          <span className="text-[9px] font-bold text-slate-600 uppercase tracking-[0.5em]">La Ruta de Salomón • Casa de Juanita</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;
