@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biografía del Humo: La Ciencia de Atrapar el Viento</title>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -40,34 +42,36 @@
 
         #background-image {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%) scale(1.02);
+            inset: 0;
+            width: 100%;
+            height: 100%;
             background-image: url('https://i.imgur.com/cSsndmN.jpeg');
             background-size: cover;
-            background-position: center center;
-            filter: brightness(0.35) saturate(0.8);
-            transition: filter 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 20s ease-in-out;
+            background-position: center 20%;
+            filter: brightness(0.5) contrast(1.15);
+            transition: filter 2s ease, transform 60s linear;
+            z-index: -1;
         }
 
         .animate-subtle-zoom {
-            animation: subtleZoom 40s infinite alternate ease-in-out;
+            animation: subtleZoom 60s infinite alternate ease-in-out;
         }
 
         @keyframes subtleZoom {
-            from { transform: translate(-50%, -50%) scale(1.02); }
-            to { transform: translate(-50%, -50%) scale(1.1); }
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.05);
+            }
         }
 
         /* EFECTOS DE CAPA */
         .vignette {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, transparent 20%, rgba(7, 9, 13, 0.7) 70%, var(--bg-dark) 100%);
+            background: radial-gradient(circle, transparent 30%, rgba(7, 9, 13, 0.4) 70%, var(--bg-dark) 100%);
             z-index: 1;
             pointer-events: none;
         }
@@ -108,12 +112,20 @@
         }
 
         @keyframes revealContent {
-            from { opacity: 0; transform: translateY(30px) scale(0.98); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         input[type=range] {
             -webkit-appearance: none;
+            appearance: none;
             height: 4px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -121,6 +133,7 @@
 
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
+            appearance: none;
             height: 22px;
             width: 22px;
             border-radius: 50%;
@@ -129,8 +142,27 @@
             cursor: pointer;
             border: 4px solid var(--accent-indigo);
         }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(99, 102, 241, 0.5);
+        }
     </style>
 </head>
+
 <body>
 
     <!-- Capas de Fondo -->
@@ -141,28 +173,35 @@
     <div id="glow-layer" class="glow-overlay"></div>
 
     <!-- PANTALLA DE INICIO -->
-    <div id="splash-screen" class="relative z-20 min-h-screen flex items-center justify-center p-6 text-center transition-all duration-1000">
+    <div id="splash-screen"
+        class="relative z-20 min-h-screen flex items-center justify-center p-6 text-center transition-all duration-1000">
         <div class="max-w-md w-full reveal-step">
-            <div class="mb-12">
-                <img src="https://i.imgur.com/dDYOrEm.png" alt="Logo" class="w-40 mx-auto drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+            <div class="mb-8">
+                <img src="https://i.imgur.com/dDYOrEm.png" alt="Logo"
+                    class="w-28 mx-auto mix-blend-screen brightness-125 contrast-125 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">
             </div>
-            
-            <h1 class="text-6xl font-black text-white leading-none uppercase italic tracking-tighter mb-4 drop-shadow-2xl">
-                Biografía <br/> <span class="text-indigo-400">del Humo</span>
+
+            <h1
+                class="text-6xl font-black text-white leading-none uppercase italic tracking-tighter mb-4 drop-shadow-2xl">
+                Biografía <br /> <span class="text-indigo-400">del Humo</span>
             </h1>
-            <p class="text-amber-500 font-bold text-xs tracking-[0.6em] uppercase mb-10">La Ciencia de Atrapar el Viento</p>
+            <p class="text-amber-500 font-bold text-xs tracking-[0.6em] uppercase mb-10">La Ciencia de Atrapar el Viento
+            </p>
 
             <p class="text-slate-300 text-lg leading-relaxed italic px-4 mb-12 font-light">
-                "Una travesía interactiva por el corazón de Salomón para descubrir que solo la eternidad puede saciar tu sed."
+                "Una travesía interactiva por el corazón de Salomón para descubrir que solo la eternidad puede saciar tu
+                sed."
             </p>
-            
-            <button onclick="startExperience()" class="group relative px-12 py-5 font-black text-white uppercase tracking-[0.2em] bg-indigo-600 rounded-full transition-all hover:bg-indigo-500 hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(79,70,229,0.3)]">
+
+            <button onclick="startExperience()"
+                class="group relative px-12 py-5 font-black text-white uppercase tracking-[0.2em] bg-indigo-600 rounded-full transition-all hover:bg-indigo-500 hover:scale-105 active:scale-95 shadow-[0_20px_40px_rgba(79,70,229,0.3)]">
                 <span class="flex items-center gap-3 text-lg">
                     Comenzar Travesía <i data-lucide="play" class="w-5 h-5 fill-current"></i>
                 </span>
             </button>
 
-            <p class="mt-20 text-slate-500 text-[9px] font-bold uppercase tracking-[0.8em] opacity-50">Casa de Juanita • Charla Semanal</p>
+            <p class="mt-20 text-slate-500 text-[9px] font-bold uppercase tracking-[0.8em] opacity-50">Casa de Juanita •
+                Charla Semanal</p>
         </div>
     </div>
 
@@ -173,10 +212,12 @@
         <div id="content-area" class="flex-1"></div>
 
         <footer class="mt-12 flex gap-4">
-            <button id="prev-btn" onclick="prevStep()" class="flex-1 py-5 rounded-2xl bg-white/5 text-slate-400 font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/10 transition-all opacity-0 pointer-events-none border border-white/5">
+            <button id="prev-btn" onclick="prevStep()"
+                class="flex-1 py-5 rounded-2xl bg-white/5 text-slate-400 font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/10 transition-all opacity-0 pointer-events-none border border-white/5">
                 <i data-lucide="chevron-left" class="w-4 h-4"></i> Volver
             </button>
-            <button id="next-btn" onclick="nextStep()" class="flex-[2] py-5 rounded-2xl bg-indigo-600 text-white font-black text-[10px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-xl shadow-indigo-900/20 hover:bg-indigo-500 transition-all active:scale-95">
+            <button id="next-btn" onclick="nextStep()"
+                class="flex-[2] py-5 rounded-2xl bg-indigo-600 text-white font-black text-[10px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-xl shadow-indigo-900/20 hover:bg-indigo-500 transition-all active:scale-95">
                 <span>Continuar</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </button>
         </footer>
@@ -185,26 +226,34 @@
     <!-- PANTALLA FINAL -->
     <div id="final-screen" class="hidden relative z-20 min-h-screen flex items-center justify-center p-6 text-center">
         <div class="max-w-md w-full glass-card rounded-[40px] p-12 border-indigo-500/20">
-            <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-emerald-500/20">
+            <div
+                class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-emerald-500/20">
                 <i data-lucide="check" class="text-emerald-400 w-10 h-10"></i>
             </div>
             <h2 class="text-3xl font-black text-white mb-4 uppercase italic tracking-tighter">Travesía Completada</h2>
             <p class="text-slate-400 leading-relaxed mb-10 italic">
                 "Has comprendido la ciencia del viento; ahora vive para lo que realmente permanece."
             </p>
-            <button onclick="restartExperience()" class="w-full py-5 bg-white text-black font-black uppercase tracking-widest rounded-2xl hover:bg-slate-100 transition-all shadow-xl">
+            <button onclick="restartExperience()"
+                class="w-full py-5 bg-white text-black font-black uppercase tracking-widest rounded-2xl hover:bg-slate-100 transition-all shadow-xl">
                 Reiniciar Ruta
             </button>
         </div>
     </div>
 
     <script>
+        // Configuración de Audio (Opcional)
+        const ambientAudio = new Audio('https://www.soundjay.com/nature/wind-chime-01.mp3'); // Sonido de viento suave/campanillas
+        ambientAudio.loop = true;
+        let audioStarted = false;
+
         const pathContent = [
             {
                 id: 'video-intro',
                 title: "El Rey Moderno",
                 subtitle: "La Soledad en la Cima",
-                videoUrl: "https://www.youtube.com/embed/ElZfPNczhDo",
+                videoUrl: "https://www.youtube.com/embed/SqvAoKaDJcY",
+                videoNarrative: "El video muestra a un hombre inmensamente exitoso sentado solo en un estadio vibrante. Mientras miles celebran a su alrededor, él permanece absorto en su teléfono, habitando una burbuja de aislamiento absoluto. Representa la paradoja moderna: tener el mundo en la palma de la mano, pero no tener a nadie en el corazón.",
                 narrative: "¡Mira esa imagen un segundo! Ahí está el hombre que ha hackeado el sistema del éxito mundial. Tiene el control de la información, el dinero suficiente para comprar países y el sueño de colonizar otros mundos. Pero ahí lo ves: solo, en un palco de cristal, rodeado de miles de personas pero habitando un silencio ensordecedor. Es el recordatorio moderno de que puedes ser el dueño de la fiesta y, aun así, sentirte el invitado más extraño. ¿Qué busca en su teléfono? Quizás busca lo mismo que tú: algo que no se pueda comprar con acciones de Tesla.",
                 question: "Al ver la soledad de Musk, ¿qué vacío crees que un tuit o un millón de dólares jamás podrían llenar?",
                 type: "text",
@@ -275,16 +324,29 @@
         ];
 
         let currentStep = 0;
+        let userResponses = JSON.parse(localStorage.getItem('devotional_responses')) || {};
 
         function startExperience() {
+            if (!audioStarted) {
+                ambientAudio.volume = 0.3;
+                ambientAudio.play().catch(e => console.log("Audio waiting for interaction"));
+                audioStarted = true;
+            }
+
             document.getElementById('splash-screen').style.opacity = '0';
             document.getElementById('splash-screen').style.transform = 'scale(1.1)';
             setTimeout(() => {
                 document.getElementById('splash-screen').classList.add('hidden');
                 document.getElementById('path-container').classList.remove('hidden');
                 initProgressBar();
+                // Recuperar último paso si existe
+                const savedStep = localStorage.getItem('devotional_current_step');
+                if (savedStep !== null) {
+                    currentStep = parseInt(savedStep);
+                }
                 updateStep();
-                document.getElementById('background-image').style.filter = 'brightness(0.15) saturate(0.5) blur(6px)';
+                document.getElementById('background-image').style.backgroundPosition = 'center 30%';
+                document.getElementById('background-image').style.filter = 'brightness(0.35) contrast(1.2) blur(3px)';
             }, 800);
         }
 
@@ -299,10 +361,23 @@
             });
         }
 
+        function saveResponse(value) {
+            const stepId = pathContent[currentStep].id;
+            userResponses[stepId] = value;
+            localStorage.setItem('devotional_responses', JSON.stringify(userResponses));
+            localStorage.setItem('devotional_current_step', currentStep);
+        }
+
+        function handleInput(el) {
+            saveResponse(el.value);
+        }
+
         function updateStep() {
             const step = pathContent[currentStep];
             const area = document.getElementById('content-area');
             document.getElementById('glow-layer').style.background = `radial-gradient(circle at top right, ${step.accent}, transparent 60%)`;
+
+            const savedValue = userResponses[step.id] || '';
 
             let ui = `
                 <div class="reveal-step">
@@ -319,7 +394,31 @@
             `;
 
             if (step.videoUrl) {
-                ui += `<div class="w-full aspect-video rounded-[32px] overflow-hidden border border-white/10 shadow-2xl mb-8"><iframe class="w-full h-full" src="${step.videoUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+                let finalUrl = step.videoUrl;
+                if (finalUrl.includes('shorts/')) {
+                    finalUrl = finalUrl.replace('shorts/', 'embed/');
+                }
+                const origin = window.location.origin === 'null' ? 'https://www.youtube.com' : window.location.origin;
+                const embedUrl = finalUrl.replace('youtube.com', 'youtube-nocookie.com') + (finalUrl.includes('?') ? '&' : '?') + `enablejsapi=1&origin=${origin}`;
+
+                ui += `
+                    <div class="mb-8">
+                        <div class="w-full aspect-video rounded-[32px] overflow-hidden border border-white/10 shadow-2xl relative bg-black/40">
+                            <iframe class="w-full h-full" src="${embedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                        </div>
+                        <div class="mt-4 flex flex-col gap-3">
+                            <button onclick="toggleNarrative()" class="text-[9px] font-bold text-slate-500 hover:text-indigo-400 uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
+                                <i data-lucide="help-circle" class="w-3 h-3"></i> ¿No puedes ver el video? (Alternativa)
+                            </button>
+                            <div id="video-narrative-box" class="hidden glass-card rounded-2xl p-6 border-amber-500/20 bg-amber-500/5 reveal-step">
+                                <p class="text-amber-400 text-[8px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                                    <i data-lucide="info" class="w-3 h-3"></i> Resumen de la Escena
+                                </p>
+                                <p class="text-slate-300 text-xs italic leading-relaxed">${step.videoNarrative || 'Sin descripción disponible.'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
 
             if (step.scripture) {
@@ -345,15 +444,20 @@
             `;
 
             if (step.type === 'slider') {
-                ui += `<input type="range" min="1" max="10" class="w-full mb-4"><div class="flex justify-between text-[8px] font-bold text-slate-500 uppercase tracking-widest"><span>Susurro</span><span>Grito</span></div>`;
+                ui += `<input type="range" min="1" max="10" value="${savedValue || 5}" oninput="handleInput(this)" class="w-full mb-4"><div class="flex justify-between text-[8px] font-bold text-slate-500 uppercase tracking-widest"><span>Susurro</span><span>Grito</span></div>`;
             } else if (step.type === 'choice') {
-                ui += `<div class="grid gap-2">` + step.options.map(o => `<button class="p-4 text-left rounded-2xl border border-white/5 bg-white/5 hover:bg-indigo-600 hover:border-indigo-500 transition-all text-[10px] font-bold uppercase tracking-widest text-slate-300 hover:text-white">${o}</button>`).join('') + `</div>`;
+                ui += `<div class="grid gap-2">` + step.options.map(o => `
+                    <button onclick="selectChoice('${o}')" class="p-4 text-left rounded-2xl border ${savedValue === o ? 'border-indigo-500 bg-indigo-600/20 text-white' : 'border-white/5 bg-white/5 text-slate-300'} hover:bg-indigo-600 hover:border-indigo-500 transition-all text-[10px] font-bold uppercase tracking-widest hover:text-white">${o}</button>
+                `).join('') + `</div>`;
             } else if (step.type === 'list') {
-                ui += `<div class="grid gap-3">` + [1,2,3].map(i => `<input type="text" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs outline-none focus:border-indigo-500 transition-all" placeholder="Milagro #${i}...">`).join('') + `</div>`;
+                const listValues = Array.isArray(savedValue) ? savedValue : ['', '', ''];
+                ui += `<div class="grid gap-3">` + [0, 1, 2].map(i => `
+                    <input type="text" value="${listValues[i] || ''}" oninput="handleListInput(${i}, this)" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs outline-none focus:border-indigo-500 transition-all text-white" placeholder="Milagro #${i + 1}...">
+                `).join('') + `</div>`;
             } else if (step.type === 'final') {
                 ui += `<div class="text-center py-4 text-emerald-400 text-[10px] font-bold uppercase tracking-[0.3em] animate-pulse">Momento de rendición...</div>`;
             } else {
-                ui += `<textarea class="w-full input-premium rounded-2xl p-4 text-sm outline-none h-28 text-white" placeholder="Escribe aquí..."></textarea>`;
+                ui += `<textarea oninput="handleInput(this)" class="w-full input-premium rounded-2xl p-4 text-sm outline-none h-28 text-white" placeholder="Escribe aquí...">${savedValue}</textarea>`;
             }
 
             ui += `</div></div>`;
@@ -363,7 +467,7 @@
             const p = document.getElementById('prev-btn');
             currentStep === 0 ? p.classList.add('opacity-0', 'pointer-events-none') : p.classList.remove('opacity-0', 'pointer-events-none');
             document.getElementById('next-btn').querySelector('span').innerText = currentStep === pathContent.length - 1 ? 'Finalizar' : 'Continuar';
-            
+
             pathContent.forEach((_, i) => {
                 const d = document.getElementById(`dot-${i}`);
                 if (d) d.className = `h-1 flex-1 rounded-full transition-all duration-700 ${i <= currentStep ? 'bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]' : 'bg-white/10'}`;
@@ -371,22 +475,89 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function nextStep() { currentStep < pathContent.length - 1 ? (currentStep++, updateStep()) : finish(); }
-        function prevStep() { if (currentStep > 0) { currentStep--; updateStep(); } }
+        function selectChoice(val) {
+            saveResponse(val);
+            updateStep();
+        }
+
+        function handleListInput(index, el) {
+            const stepId = pathContent[currentStep].id;
+            let currentList = userResponses[stepId] || ['', '', ''];
+            if (!Array.isArray(currentList)) currentList = ['', '', ''];
+            currentList[index] = el.value;
+            saveResponse(currentList);
+        }
+
+        function nextStep() {
+            if (currentStep < pathContent.length - 1) {
+                currentStep++;
+                updateStep();
+                localStorage.setItem('devotional_current_step', currentStep);
+            } else {
+                finish();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+                localStorage.setItem('devotional_current_step', currentStep);
+            }
+        }
+
         function finish() {
             document.getElementById('path-container').classList.add('hidden');
             document.getElementById('final-screen').classList.remove('hidden');
-            document.getElementById('background-image').style.filter = 'brightness(0.1) blur(10px)';
+            document.getElementById('background-image').style.filter = 'brightness(0.2) contrast(1.3) blur(4px)';
+
+            const summaryArea = document.createElement('div');
+            summaryArea.className = "mt-8 text-left max-h-60 overflow-y-auto pr-2 space-y-4 custom-scrollbar";
+
+            let summaryHtml = '<h3 class="text-indigo-400 text-[10px] font-black uppercase tracking-widest mb-4">Tus Reflexiones</h3>';
+            pathContent.forEach(step => {
+                if (step.id !== 'conclusion') {
+                    const response = userResponses[step.id];
+                    if (response) {
+                        summaryHtml += `
+                            <div class="border-l-2 border-white/10 pl-4 py-1">
+                                <p class="text-[8px] text-slate-500 uppercase font-bold">${step.title}</p>
+                                <p class="text-xs text-slate-300 italic">${Array.isArray(response) ? response.filter(r => r).join(', ') : response}</p>
+                            </div>
+                        `;
+                    }
+                }
+            });
+            summaryArea.innerHTML = summaryHtml;
+            document.querySelector('#final-screen .glass-card').insertBefore(summaryArea, document.querySelector('#final-screen button'));
         }
+
         function restartExperience() {
+            localStorage.removeItem('devotional_current_step');
+            localStorage.removeItem('devotional_responses');
+            userResponses = {};
             currentStep = 0;
+
+            // Limpiar resumen si existe
+            const summary = document.querySelector('#final-screen .custom-scrollbar');
+            if (summary) summary.remove();
+
             document.getElementById('final-screen').classList.add('hidden');
             document.getElementById('splash-screen').classList.remove('hidden');
             document.getElementById('splash-screen').style.opacity = '1';
             document.getElementById('splash-screen').style.transform = 'scale(1)';
-            document.getElementById('background-image').style.filter = 'brightness(0.35) saturate(0.8)';
+            document.getElementById('background-image').style.filter = 'brightness(0.35) saturate(0.85)';
         }
+        function toggleNarrative() {
+            const box = document.getElementById('video-narrative-box');
+            if (box) {
+                box.classList.toggle('hidden');
+                lucide.createIcons();
+            }
+        }
+
         window.onload = () => lucide.createIcons();
     </script>
 </body>
+
 </html>
