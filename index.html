@@ -185,7 +185,7 @@
                 class="text-6xl font-black text-white leading-none uppercase italic tracking-tighter mb-4 drop-shadow-2xl">
                 Biografía <br /> <span class="text-indigo-400">del Humo</span>
             </h1>
-            <p class="text-amber-500 font-bold text-xs tracking-[0.6em] uppercase mb-10">La Ciencia de Atrapar el Viento
+            <p class="text-amber-500 font-bold text-sm tracking-[0.6em] uppercase mb-10">La Ciencia de Atrapar el Viento
             </p>
 
             <p class="text-slate-300 text-lg leading-relaxed italic px-4 mb-12 font-light">
@@ -200,7 +200,7 @@
                 </span>
             </button>
 
-            <p class="mt-20 text-slate-500 text-[9px] font-bold uppercase tracking-[0.8em] opacity-50">Casa de Juanita •
+            <p class="mt-20 text-slate-500 text-xs font-bold uppercase tracking-[0.8em] opacity-50">Casa de Juanita •
                 Charla Semanal</p>
         </div>
     </div>
@@ -213,11 +213,11 @@
 
         <footer class="mt-12 flex gap-4">
             <button id="prev-btn" onclick="prevStep()"
-                class="flex-1 py-5 rounded-2xl bg-white/5 text-slate-400 font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/10 transition-all opacity-0 pointer-events-none border border-white/5">
+                class="flex-1 py-5 rounded-2xl bg-white/5 text-slate-400 font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-white/10 transition-all opacity-0 pointer-events-none border border-white/5">
                 <i data-lucide="chevron-left" class="w-4 h-4"></i> Volver
             </button>
             <button id="next-btn" onclick="nextStep()"
-                class="flex-[2] py-5 rounded-2xl bg-indigo-600 text-white font-black text-[10px] uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-xl shadow-indigo-900/20 hover:bg-indigo-500 transition-all active:scale-95">
+                class="flex-[2] py-5 rounded-2xl bg-indigo-600 text-white font-bold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-xl shadow-indigo-900/20 hover:bg-indigo-500 transition-all active:scale-95">
                 <span>Continuar</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
             </button>
         </footer>
@@ -259,6 +259,25 @@
                 type: "text",
                 icon: "eye",
                 accent: "rgba(99, 102, 241, 0.25)"
+            },
+            {
+                id: 'timeline-solomon',
+                title: "Crónicas del Rey",
+                subtitle: "Línea de Tiempo Histórica",
+                narrative: "Antes de continuar, recorramos los hitos que marcaron la vida del hombre más sabio que jamás existió. Desde su nacimiento hasta el eco de su muerte, cada paso nos enseña algo sobre la naturaleza humana y la fidelidad de Dios.",
+                type: "timeline",
+                icon: "clock",
+                accent: "rgba(99, 102, 241, 0.2)",
+                events: [
+                    { year: "990 a.C.", title: "Nacimiento", desc: "Nace en Jerusalén, hijo del rey David y Betsabé.", icon: "baby" },
+                    { year: "970 a.C.", title: "Ascenso al Trono", desc: "Ungido como tercer rey de Israel antes de la muerte de David.", icon: "crown" },
+                    { year: "Inicio", title: "Petición de Sabiduría", desc: "Pide sabiduría para gobernar en lugar de riqueza.", icon: "brain" },
+                    { year: "966-959 a.C.", title: "El Templo", desc: "Dedica siete años a construir el Primer Templo de Jerusalén.", icon: "church" },
+                    { year: "Cúspide", title: "Era Dorada", desc: "Paz, riquezas y fama internacional (Reina de Sabá).", icon: "sparkles" },
+                    { year: "Declive", title: "Idolatría", desc: "Sus esposas extranjeras desvían su corazón hacia otros dioses.", icon: "alert-triangle" },
+                    { year: "Final", title: "Eclesiastés", desc: "Escribe sobre el vacío y concluye que temer a Dios es el único deber.", icon: "scroll" },
+                    { year: "931 a.C.", title: "Muerte y División", desc: "Muere tras 40 años. El reino se divide bajo su hijo Roboam.", icon: "split" }
+                ]
             },
             {
                 id: 'autopsia',
@@ -383,13 +402,13 @@
                 <div class="reveal-step">
                 <header class="mb-8">
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-[9px] font-black uppercase tracking-[0.4em] text-slate-500">Estación ${currentStep + 1}</span>
+                        <span class="text-xs font-black uppercase tracking-[0.4em] text-slate-500">Estación ${currentStep + 1}</span>
                         <div class="p-3 bg-white/5 rounded-2xl border border-white/10 backdrop-blur-md text-indigo-400">
                             <i data-lucide="${step.icon}" class="w-6 h-6"></i>
                         </div>
                     </div>
                     <h1 class="text-4xl font-black text-white leading-none uppercase italic mb-2 tracking-tighter">${step.title}</h1>
-                    <p class="text-amber-500 font-bold text-[10px] uppercase tracking-[0.4em]">${step.subtitle}</p>
+                    <p class="text-amber-500 font-bold text-xs uppercase tracking-[0.4em]">${step.subtitle}</p>
                 </header>
             `;
 
@@ -415,14 +434,13 @@
                             ${videoHtml}
                         </div>
                         <div class="mt-4 flex flex-col gap-3">
-                            <button onclick="toggleNarrative()" class="text-[9px] font-bold text-slate-500 hover:text-indigo-400 uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
-                                <i data-lucide="help-circle" class="w-3 h-3"></i> ¿No puedes ver el video? (Alternativa)
+                                <i data-lucide="help-circle" class="w-4 h-4"></i> ¿No puedes ver el video? (Alternativa)
                             </button>
                             <div id="video-narrative-box" class="hidden glass-card rounded-2xl p-6 border-amber-500/20 bg-amber-500/5 reveal-step">
-                                <p class="text-amber-400 text-[8px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
-                                    <i data-lucide="info" class="w-3 h-3"></i> Resumen de la Escena
+                                <p class="text-amber-400 text-xs font-black uppercase tracking-widest mb-2 flex items-center gap-2">
+                                    <i data-lucide="info" class="w-4 h-4"></i> Resumen de la Escena
                                 </p>
-                                <p class="text-slate-300 text-xs italic leading-relaxed">${step.videoNarrative || 'Sin descripción disponible.'}</p>
+                                <p class="text-slate-300 text-sm italic leading-relaxed">${step.videoNarrative || 'Sin descripción disponible.'}</p>
                             </div>
                         </div>
                     </div>
@@ -434,38 +452,57 @@
                     <div class="glass-card rounded-[32px] p-8 mb-8 relative overflow-hidden">
                         <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
                         <p class="text-indigo-100 text-lg italic font-serif-italic leading-relaxed text-justify">"${step.scripture}"</p>
-                        <p class="mt-4 text-indigo-400 text-[9px] font-black uppercase tracking-widest">— ${step.verse}</p>
+                        <p class="mt-4 text-indigo-400 text-xs font-black uppercase tracking-widest">— ${step.verse}</p>
                     </div>
                 `;
             }
 
             ui += `
                 <article class="mb-8">
-                    <p class="text-slate-400 leading-relaxed text-sm font-light text-justify">${step.narrative}</p>
+                    <p class="text-slate-300 leading-relaxed text-base font-medium text-justify">${step.narrative}</p>
                 </article>
 
                 <div class="glass-card rounded-[32px] p-8 mb-12">
-                    <p class="text-white text-xs font-bold uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <p class="text-white text-sm font-bold uppercase tracking-widest mb-6 flex items-center gap-2">
                         <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Reflexión Directa
                     </p>
-                    <p class="text-slate-300 text-sm italic mb-6">${step.question}</p>
+                    <p class="text-slate-100 text-base italic mb-6">${step.question}</p>
             `;
 
             if (step.type === 'slider') {
-                ui += `<input type="range" min="1" max="10" value="${savedValue || 5}" oninput="handleInput(this)" class="w-full mb-4"><div class="flex justify-between text-[8px] font-bold text-slate-500 uppercase tracking-widest"><span>Susurro</span><span>Grito</span></div>`;
+                ui += `<input type="range" min="1" max="10" value="${savedValue || 5}" oninput="handleInput(this)" class="w-full mb-4"><div class="flex justify-between text-xs font-bold text-slate-500 uppercase tracking-widest"><span>Susurro</span><span>Grito</span></div>`;
             } else if (step.type === 'choice') {
                 ui += `<div class="grid gap-2">` + step.options.map(o => `
-                    <button onclick="selectChoice('${o}')" class="p-4 text-left rounded-2xl border ${savedValue === o ? 'border-indigo-500 bg-indigo-600/20 text-white' : 'border-white/5 bg-white/5 text-slate-300'} hover:bg-indigo-600 hover:border-indigo-500 transition-all text-[10px] font-bold uppercase tracking-widest hover:text-white">${o}</button>
+                    <button onclick="selectChoice('${o}')" class="p-4 text-left rounded-2xl border ${savedValue === o ? 'border-indigo-500 bg-indigo-600/20 text-white' : 'border-white/5 bg-white/5 text-slate-300'} hover:bg-indigo-600 hover:border-indigo-500 transition-all text-sm font-bold uppercase tracking-widest hover:text-white">${o}</button>
                 `).join('') + `</div>`;
             } else if (step.type === 'list') {
                 const listValues = Array.isArray(savedValue) ? savedValue : ['', '', ''];
                 ui += `<div class="grid gap-3">` + [0, 1, 2].map(i => `
-                    <input type="text" value="${listValues[i] || ''}" oninput="handleListInput(${i}, this)" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs outline-none focus:border-indigo-500 transition-all text-white" placeholder="Milagro #${i + 1}...">
+                    <input type="text" value="${listValues[i] || ''}" oninput="handleListInput(${i}, this)" class="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-sm outline-none focus:border-indigo-500 transition-all text-white" placeholder="Milagro #${i + 1}...">
                 `).join('') + `</div>`;
             } else if (step.type === 'final') {
-                ui += `<div class="text-center py-4 text-emerald-400 text-[10px] font-bold uppercase tracking-[0.3em] animate-pulse">Momento de rendición...</div>`;
+                ui += `<div class="text-center py-4 text-emerald-400 text-xs font-bold uppercase tracking-[0.3em] animate-pulse">Momento de rendición...</div>`;
+            } else if (step.type === 'timeline') {
+                ui += `
+                    <div class="relative pl-8 space-y-12 mb-12">
+                        <div class="absolute left-[11px] top-2 bottom-2 w-0.5 bg-gradient-to-b from-indigo-500 via-indigo-500/20 to-transparent"></div>
+                        ${step.events.map((ev, idx) => `
+                            <div class="relative reveal-step" style="animation-delay: ${idx * 0.1}s">
+                                <div class="absolute -left-[27px] top-1 w-4 h-4 rounded-full bg-indigo-600 border-4 border-slate-900 shadow-[0_0_10px_rgba(99,102,241,0.5)] z-10 transition-transform hover:scale-150"></div>
+                                <div class="glass-card rounded-2xl p-5 border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-colors">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest">${ev.year}</span>
+                                        <i data-lucide="${ev.icon}" class="w-3 h-3 text-slate-500"></i>
+                                    </div>
+                                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-2">${ev.title}</h4>
+                                    <p class="text-xs text-slate-400 leading-relaxed font-light">${ev.desc}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
             } else {
-                ui += `<textarea oninput="handleInput(this)" class="w-full input-premium rounded-2xl p-4 text-sm outline-none h-28 text-white" placeholder="Escribe aquí...">${savedValue}</textarea>`;
+                ui += `<textarea oninput="handleInput(this)" class="w-full input-premium rounded-2xl p-4 text-base outline-none h-32 text-white" placeholder="Escribe aquí...">${savedValue}</textarea>`;
             }
 
             ui += `</div></div>`;
@@ -522,15 +559,15 @@
             const summaryArea = document.createElement('div');
             summaryArea.className = "mt-8 text-left max-h-60 overflow-y-auto pr-2 space-y-4 custom-scrollbar";
 
-            let summaryHtml = '<h3 class="text-indigo-400 text-[10px] font-black uppercase tracking-widest mb-4">Tus Reflexiones</h3>';
+            let summaryHtml = '<h3 class="text-indigo-400 text-xs font-black uppercase tracking-widest mb-4">Tus Reflexiones</h3>';
             pathContent.forEach(step => {
                 if (step.id !== 'conclusion') {
                     const response = userResponses[step.id];
                     if (response) {
                         summaryHtml += `
                             <div class="border-l-2 border-white/10 pl-4 py-1">
-                                <p class="text-[8px] text-slate-500 uppercase font-bold">${step.title}</p>
-                                <p class="text-xs text-slate-300 italic">${Array.isArray(response) ? response.filter(r => r).join(', ') : response}</p>
+                                <p class="text-xs text-slate-500 uppercase font-bold">${step.title}</p>
+                                <p class="text-sm text-slate-200 italic">${Array.isArray(response) ? response.filter(r => r).join(', ') : response}</p>
                             </div>
                         `;
                     }
